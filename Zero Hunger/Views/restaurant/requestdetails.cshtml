@@ -1,0 +1,105 @@
+﻿@model Zero_Hunger.DB.request
+
+@{
+    ViewBag.Title = "requestdetails";
+    Layout = "~/Views/Shared/_restLayout.cshtml";
+}
+
+<aside class="sidebar">
+    <nav>
+        <ul>
+            <li><a href="@Url.Action("Index", "restaurant")">My History</a></li>
+            <li><a href="@Url.Action("cart", "restaurant")">Cart</a></li>
+            <li><a href="@Url.Action("Index", "Home")">Logout</a></li>
+        </ul>
+    </nav>
+</aside>
+
+@if (TempData["msg"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["msg"]
+    </div>
+}
+
+<ul class="list-group list-group">
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                ID
+            </div>
+            @Model.id
+        </div>
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Status
+            </div>
+            @Model.status
+        </div>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Order datetime
+            </div>
+            @Model.order_datetime.ToString();
+        </div>
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Expire Date time
+            </div>
+            @Model.expire_datetime.ToString();
+        </div>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Requested by
+            </div>
+            @Model.restaurant.username
+        </div>
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Total quantity
+            </div>
+            @Model.total_quantity
+        </div>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Assigned Employee
+            </div>
+            @(Model.employee != null ? Model.employee.username : "Not assigned")
+        </div>
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Assigned by
+            </div>
+            @(Model.admin != null ? Model.admin.username : "Not assigned")
+        </div>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Food list:
+            </div>
+            <table class="table table-bordered">
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Quantity</th>
+                </tr>
+                @foreach (var item in Model.foods.ToList())
+            {
+                <tr>
+                    <td>@item.id</td>
+                    <td>@item.type</td>
+                    <td>@item.quantity</td>
+                </tr>
+            }
+                </table>
+        </div>
+    </li>
+</ul>
+<link href="@Url.Content("~/Style/myStyle.css")" rel="stylesheet" />

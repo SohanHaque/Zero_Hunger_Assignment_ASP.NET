@@ -1,0 +1,78 @@
+﻿@model Zero_Hunger.DB.restaurant
+
+@{
+    ViewBag.Title = "restaurantDetails";
+    Layout = "~/Views/Shared/_empLayout.cshtml";
+}
+
+<aside class="sidebar">
+    <nav>
+        <ul>
+            <li><a href="@Url.Action("Index", "employee")">Employee Page</a></li>
+            <li><a href="@Url.Action("requestlist", "employee")">Request List</a></li>
+            <li><a href="@Url.Action("Index", "Home")">Logout</a></li>
+        </ul>
+    </nav>
+</aside>
+
+@if (TempData["msg"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["msg"]
+    </div>
+}
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.address)
+        </dd>
+
+    </dl>
+</div>
+<link href="@Url.Content("~/Style/myStyle.css")" rel="stylesheet" />

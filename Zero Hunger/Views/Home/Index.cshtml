@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<main class="container">
+    <aside class="sidebar">
+        <nav>
+            <ul>
+                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li><a href="@Url.Action("login", "admin")">Admin</a></li>
+                <li><a href="@Url.Action("login", "employee")">Employee</a></li>
+                <li><a href="@Url.Action("login", "restaurant")">Restaurant</a></li>
+                <li><a href="@Url.Action("About", "Home")">About Us</a></li>
+                <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <section class="content">
+        <h1 class="title">Welcome to Our NGO!</h1>
+        <p class="lead">
+            We need a system that will help us to automate and track our works.
+            We are an NGO who works for feeding deprived people and children.
+            We have observed that people are wasting a ton of food every day
+            in Dhaka city (like office programs, buffets, etc.). We are on a
+            mission to make the usage of this food. We have contacted some
+            restaurants, and they agreed to give us those foods before it gets
+            rotten, or they will preserve those foods till we collect them.
+            We have some employees and still enrolling.
+        </p>
+    </section>
+</main>
+
+<link href="@Url.Content("~/Style/myStyle.css")" rel="stylesheet" />

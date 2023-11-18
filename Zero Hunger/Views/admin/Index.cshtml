@@ -1,0 +1,35 @@
+﻿@model List<Zero_Hunger.DB.employee>
+@{
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
+    ViewBag.Title = "Index";
+}
+
+@if (TempData["msg"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["msg"]
+    </div>
+}
+
+<main class="container">
+    <aside class="sidebar">
+        <nav>
+            <ul>
+                <li><a href="@Url.Action("Index", "admin")">Admin Page</a></li>
+                <li><a href="@Url.Action("employeelist", "admin")">Employee List</a></li>
+                <li><a href="@Url.Action("addemployee", "admin")">Add Employee</a></li>
+                <li><a href="@Url.Action("requestlist", "admin")">Request List</a></li>
+                <li><a href="@Url.Action("Index", "Home")">Logout</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <section class="content">
+        <h2 class="title">Admin Panel</h2>
+        <p class="lead">
+            Caution! For Admin Use only!
+        </p>
+    </section>
+</main>
+
+<link href="@Url.Content("~/Style/myStyle.css")" rel="stylesheet" />

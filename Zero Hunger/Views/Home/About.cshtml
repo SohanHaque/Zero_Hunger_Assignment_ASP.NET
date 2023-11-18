@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+
+@if (TempData["msg"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["msg"]
+    </div>
+}
+
+<main class="container">
+    <aside class="sidebar">
+        <nav>
+            <ul>
+                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li><a href="@Url.Action("login", "admin")">Admin</a></li>
+                <li><a href="@Url.Action("login", "employee")">Employee</a></li>
+                <li><a href="@Url.Action("login", "restaurant")">Restaurant</a></li>
+                <li><a href="@Url.Action("About", "Home")">About Us</a></li>
+                <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <section class="content">
+        <h2 id="title">@ViewBag.Title</h2>
+        <h3>@ViewBag.Message</h3>
+        <p class="lead">Use this area to provide additional information.</p>
+    </section>
+</main>
+
+<link href="@Url.Content("~/Style/myStyle.css")" rel="stylesheet" />

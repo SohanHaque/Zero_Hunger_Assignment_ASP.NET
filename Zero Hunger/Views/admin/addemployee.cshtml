@@ -1,0 +1,60 @@
+﻿
+@model Zero_Hunger.Models.addemployeeDTO
+@{
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
+    ViewBag.Title = "addemployee";
+}
+
+<aside class="sidebar">
+    <nav>
+        <ul>
+            <li><a href="@Url.Action("Index", "admin")">Admin Page</a></li>
+            <li><a href="@Url.Action("employeelist", "admin")">Employee List</a></li>
+            <li><a href="@Url.Action("addemployee", "admin")">Add Employee</a></li>
+            <li><a href="@Url.Action("requestlist", "admin")">Request List</a></li>
+            <li><a href="@Url.Action("Index", "Home")">Logout</a></li>
+        </ul>
+    </nav>
+</aside>
+
+@if (TempData["msg"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["msg"]
+    </div>
+}
+@{
+    string getDOB()
+    {
+        return (Model != null ? Model.dob.ToString("yyyy-MM-dd") : DateTime.Now.AddYears(-18).ToString("yyyy-MM-dd"));
+    }
+}
+
+<form method="post">
+    <h3>Enter information</h3>
+    <fieldset>
+        <legend>Enter information:</legend>
+        <input value="@(Model !=null ? Model.name : "")" class="form-control" type="text" name="name" placeholder="name" />
+        <span class="text-danger">@Html.ValidationMessage("name")</span>
+        <input value="@(Model !=null ? Model.email : "")" class="form-control" type="text" name="email" placeholder="email" />
+        <span class="text-danger">@Html.ValidationMessage("email")</span>
+        <input value="@(Model !=null ? Model.phone : "")" class="form-control" type="text" name="phone" placeholder="phone" />
+        <span class="text-danger">@Html.ValidationMessage("phone")</span>
+        <input value="@(Model !=null ? Model.address : "")" class="form-control" type="text" name="address" placeholder="address" />
+        <span class="text-danger">@Html.ValidationMessage("address")</span>
+        <input value="@getDOB()" class="form-control" type="date" name="dob" />
+        <span class="text-danger">@Html.ValidationMessage("dob")</span>
+    </fieldset>
+    <fieldset>
+        <legend>Choose username and password</legend>
+        <input value="@(Model !=null ? Model.username : "")" class="form-control" type="text" name="username" placeholder="Username" />
+        <span class="text-danger">@Html.ValidationMessage("username")</span>
+        <input value="@(Model !=null ? Model.password : "")" class="form-control" type="password" name="password" placeholder="Choose password" />
+        <span class="text-danger">@Html.ValidationMessage("password")</span>
+        <input value="@(Model !=null ? Model.cpassword : "")" class="form-control" type="password" name="cpassword" placeholder="Confirm password" />
+        <span class="text-danger">@Html.ValidationMessage("cpassword")</span><br />
+        <input type="submit" class="btn-danger" />
+    </fieldset>
+</form>
+
+<link href="@Url.Content("~/Style/myStyle.css")" rel="stylesheet" />

@@ -1,0 +1,66 @@
+﻿@model List<Zero_Hunger.DB.request>
+@{
+    ViewBag.Title = "requestlist";
+    Layout = "~/Views/Shared/_empLayout.cshtml";
+}
+
+<aside class="sidebar">
+    <nav>
+        <ul>
+            <li><a href="@Url.Action("Index", "employee")">Employee Page</a></li>
+            <li><a href="@Url.Action("requestlist", "employee")">Request List</a></li>
+            <li><a href="@Url.Action("Index", "Home")">Logout</a></li>
+        </ul>
+    </nav>
+</aside>
+
+@if (TempData["msg"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["msg"]
+    </div>
+}
+@{
+    if (Model.Count == 0)
+    {
+        <h1>No Request has been done</h1>
+    }
+    else
+    {
+        <table class="table table-bordered">
+            <tr>
+                <th>ID</th>
+                <th>Order Date</th>
+                <th>Expire Date</th>
+                <th>Total Quantity</th>
+                <th>Requested By</th>
+                <th>Details</th>
+                <th>Status</th>
+            </tr>
+            @foreach (var request in Model)
+            {
+                <tr>
+                    <th>@request.id</th>
+                    <th>@request.order_datetime</th>
+                    <th>@request.expire_datetime</th>
+                    <th>@request.total_quantity</th>
+                    <th>
+                        <a href="/employee/restaurantDetails/@request.restaurant.id.ToString()">
+                            @request.restaurant.username
+                        </a>
+                    </th>
+                    <th><a href="/employee/requestdetails/@request.id" class="btn btn-link">Details</a></th>
+                    <th>
+                    @request.status
+                        @if(request.status != "collected")
+                    {
+                        <a href="/employee/collectRequest/@request.id.ToString()">Collect</a>
+                    }
+                    </th>
+                </tr>
+            }
+        </table>
+    }
+}
+<link href="@Url.Content("~/Style/myStyle.css")" rel="stylesheet" />
+

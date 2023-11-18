@@ -1,0 +1,134 @@
+﻿@model Zero_Hunger.DB.request
+
+@{
+    ViewBag.Title = "requestdetails";
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
+}
+
+<aside class="sidebar">
+    <nav>
+        <ul>
+            <li><a href="@Url.Action("Index", "admin")">Admin Page</a></li>
+            <li><a href="@Url.Action("employeelist", "admin")">Employee List</a></li>
+            <li><a href="@Url.Action("addemployee", "admin")">Add Employee</a></li>
+            <li><a href="@Url.Action("requestlist", "admin")">Request List</a></li>
+            <li><a href="@Url.Action("Index", "Home")">Logout</a></li>
+        </ul>
+    </nav>
+</aside>
+
+@if (TempData["msg"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["msg"]
+    </div>
+}
+
+<ul class="list-group list-group">
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                ID
+            </div>
+            @Model.id
+        </div>
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Status
+            </div>
+            @Model.status
+        </div>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Order datetime
+            </div>
+            @Model.order_datetime.ToString();
+        </div>
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Expire Date time
+            </div>
+            @Model.expire_datetime.ToString();
+        </div>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Requested by
+            </div>
+            <a href="/admin/restaurantDetails/@Model.restaurant.id.ToString()">
+                @Model.restaurant.username
+            </a>
+        </div>
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Total quantity
+            </div>
+            @Model.total_quantity
+        </div>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Assigned Employee
+            </div>
+            @(Model.employee != null ? Model.employee.username : "Not assigned")
+            @if (Model.employee != null)
+            {
+                <a href="#">@Model.employee.username</a>
+            }
+            else
+            {
+                <span>Not assigned</span>
+            }
+            @if (!Model.status.Equals("collected"))
+            {
+                <!-- Form is here-->
+                <form method="post">
+                    <input type="hidden" value="@Model.id.ToString()" name="id" />
+                    <!--input type="text" name="emp_id" placeholder="@(Model.employee != null ? Model.employee.id.ToString() : "Not assigned")" /-->
+                    <select name="emp_id">
+                        <option disabled @(Model.employee == null ? "selected" : "")>None</option>
+                        @foreach (Zero_Hunger.DB.employee e in ViewBag.empList)
+                        {
+                            <option value="@e.id" @(Model.employee != null && Model.employee.id.Equals(e.id) ? "selected" : "")>@e.name</option>
+                        }
+                    </select>
+                    <input type="submit" value="Assign or Change" class="btn btn-danger" />
+                </form>
+            }
+        </div>
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Assigned by
+            </div>
+            @(Model.admin != null ? Model.admin.username : "Not assigned")
+        </div>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Food list:
+            </div>
+            <table class="table table-bordered">
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Quantity</th>
+                </tr>
+                @foreach (var item in Model.foods.ToList())
+            {
+                <tr>
+                    <td>@item.id</td>
+                    <td>@item.type</td>
+                    <td>@item.quantity</td>
+                </tr>
+            }
+                </table>
+        </div>
+    </li>
+</ul>
+
+<link href="@Url.Content("~/Style/myStyle.css")" rel="stylesheet" />

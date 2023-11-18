@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="admins">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="employees">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="phone" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="address" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="dob" Type="datetime" Nullable="false" />
+    <Property Name="admin_id" Type="int" />
+  </EntityType>
+  <EntityType Name="foods">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="type" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="quantity" Type="int" Nullable="false" />
+    <Property Name="request_id" Type="int" />
+  </EntityType>
+  <EntityType Name="requests">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="status" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="order_datetime" Type="datetime" Nullable="false" />
+    <Property Name="expire_datetime" Type="datetime" Nullable="false" />
+    <Property Name="total_quantity" Type="int" Nullable="false" />
+    <Property Name="restaurant_id" Type="int" />
+    <Property Name="employee_id" Type="int" />
+    <Property Name="admin_id" Type="int" />
+  </EntityType>
+  <EntityType Name="restaurants">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="phone" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="address" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_employee_admin">
+    <End Role="admins" Type="Self.admins" Multiplicity="0..1" />
+    <End Role="employees" Type="Self.employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="admins">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="employees">
+        <PropertyRef Name="admin_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_food_request">
+    <End Role="requests" Type="Self.requests" Multiplicity="0..1" />
+    <End Role="foods" Type="Self.foods" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="requests">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="foods">
+        <PropertyRef Name="request_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_request_admin">
+    <End Role="admins" Type="Self.admins" Multiplicity="0..1" />
+    <End Role="requests" Type="Self.requests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="admins">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="requests">
+        <PropertyRef Name="admin_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_request_employee">
+    <End Role="employees" Type="Self.employees" Multiplicity="0..1" />
+    <End Role="requests" Type="Self.requests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employees">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="requests">
+        <PropertyRef Name="employee_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_request_restaurant">
+    <End Role="restaurants" Type="Self.restaurants" Multiplicity="0..1" />
+    <End Role="requests" Type="Self.requests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="restaurants">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="requests">
+        <PropertyRef Name="restaurant_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="admins" EntityType="Self.admins" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="employees" EntityType="Self.employees" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="foods" EntityType="Self.foods" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="requests" EntityType="Self.requests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="restaurants" EntityType="Self.restaurants" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_employee_admin" Association="Self.FK_employee_admin">
+      <End Role="admins" EntitySet="admins" />
+      <End Role="employees" EntitySet="employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_food_request" Association="Self.FK_food_request">
+      <End Role="requests" EntitySet="requests" />
+      <End Role="foods" EntitySet="foods" />
+    </AssociationSet>
+    <AssociationSet Name="FK_request_admin" Association="Self.FK_request_admin">
+      <End Role="admins" EntitySet="admins" />
+      <End Role="requests" EntitySet="requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_request_employee" Association="Self.FK_request_employee">
+      <End Role="employees" EntitySet="employees" />
+      <End Role="requests" EntitySet="requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_request_restaurant" Association="Self.FK_request_restaurant">
+      <End Role="restaurants" EntitySet="restaurants" />
+      <End Role="requests" EntitySet="requests" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

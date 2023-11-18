@@ -1,0 +1,91 @@
+﻿@model List<Zero_Hunger.DB.employee>
+@{
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
+    ViewBag.Title = "Index";
+}
+
+<aside class="sidebar">
+    <nav>
+        <ul>
+            <li><a href="@Url.Action("Index", "admin")">Admin Page</a></li>
+            <li><a href="@Url.Action("employeelist", "admin")">Employee List</a></li>
+            <li><a href="@Url.Action("addemployee", "admin")">Add Employee</a></li>
+            <li><a href="@Url.Action("requestlist", "admin")">Request List</a></li>
+            <li><a href="@Url.Action("Index", "Home")">Logout</a></li>
+        </ul>
+    </nav>
+</aside>
+
+@if (TempData["msg"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["msg"]
+    </div>
+}﻿
+<script>
+    const deleteEmployee = function (deleteId) {
+        document.getElementById('deleteform').action = '/admin/deleteEmployee/' + deleteId;
+        document.getElementById('deleteText').innerHTML = "Are you sure to delete employee id " + deleteId + "?";
+    }
+</script>
+
+<table class="table table-bordered">
+    <tr>
+        <th>id</th>
+        <th>username</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>DOB</th>
+        <th>Addedd By</th>
+    </tr>
+    @foreach (var emp in Model)
+    {
+        <tr>
+            <td>@emp.id</td>
+            <td>@emp.username</td>
+            <td>@emp.name</td>
+            <td>@emp.email</td>
+            <td>@emp.phone</td>
+            <td>@emp.address</td>
+            <td>@emp.dob.ToShortDateString()</td>
+            <td>@(emp.admin != null ? emp.admin.username : "")</td>
+            <td>
+                <a class="btn btn-warning" href="/admin/editEmployee/@emp.id">Edit</a>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                        onclick="deleteEmployee(@emp.id);">
+                    Delete
+                </button>
+            </td>
+        </tr>
+    }
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="deleteText">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                @*<button type="button" class="btn btn-primary">Understood</button>*@
+                <form action="#" method="post" id="deleteform">
+                    <input class="btn btn-danger" type="submit" value="Confirm" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<link href="@Url.Content("~/Style/myStyle.css")" rel="stylesheet" />
+
+
+
+@*<li>@Html.ActionLink("Add Employee", "addemployee", "admin", new { area = "" }, new { @class = "btn btn-dark" })</li>*@

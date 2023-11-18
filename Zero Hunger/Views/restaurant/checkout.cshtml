@@ -1,0 +1,71 @@
+﻿@model Zero_Hunger.Models.processRequestDTO
+
+@{
+    ViewBag.Title = "checkout";
+    Layout = "~/Views/Shared/_restLayout.cshtml";
+}
+
+<aside class="sidebar">
+    <nav>
+        <ul>
+            <li><a href="@Url.Action("Index", "restaurant")">My History</a></li>
+            <li><a href="@Url.Action("cart", "restaurant")">Cart</a></li>
+            <li><a href="@Url.Action("Index", "Home")">Logout</a></li>
+        </ul>
+    </nav>
+</aside>
+
+@if (TempData["msg"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["msg"]
+    </div>
+}
+
+@{
+    string getExpireDatetime()
+    {
+        return (Model != null ? Model.expire_datetime.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"));
+    }
+}
+
+
+@if (Session["foodlist"] == null)
+{
+    <h1>No food is added yet</h1>
+    <br />
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                Type
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in (List<Zero_Hunger.Models.addFoodDTO>)Session["foodlist"])
+        {
+            <tr>
+                <td>
+                    @item.type
+                </td>
+                <td>
+                    @item.quantity
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<form method="post">
+    <h3>Expire Date</h3>
+    <input value="@getExpireDatetime()" class="form-control" type="date" name="expire_datetime" />
+    <span class="text-danger">@Html.ValidationMessage("expire_datetime")</span>
+    <input type="submit" class="btn-danger" />
+</form>
+<link href="@Url.Content("~/Style/myStyle.css")" rel="stylesheet" />

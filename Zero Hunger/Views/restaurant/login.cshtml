@@ -1,0 +1,40 @@
+﻿@model Zero_Hunger.Models.loginDTO
+@{
+    ViewBag.Title = "login";
+    Layout = "~/Views/Shared/_restLayout.cshtml";
+}
+
+<aside class="sidebar">
+    <nav>
+        <ul>
+            <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+            <li><a href="@Url.Action("login", "admin")">Admin</a></li>
+            <li><a href="@Url.Action("login", "employee")">Employee</a></li>
+            <li><a href="@Url.Action("login", "restaurant")">Restaurant</a></li>
+            <li><a href="@Url.Action("About", "Home")">About Us</a></li>
+            <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
+        </ul>
+    </nav>
+</aside>
+
+@if (TempData["msg"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["msg"]
+    </div>
+}
+<form method="post">
+    <fieldset>
+        <legend>Login</legend>
+        <input value="@(Model !=null ? Model.username : "")" class="form-control" type="text" name="username" placeholder="Username" />
+        <span class="text-danger">@Html.ValidationMessage("username")</span>
+        <input value="@(Model !=null ? Model.password : "")" class="form-control" type="password" name="password" placeholder="Choose password" />
+        <span class="text-danger">@Html.ValidationMessage("password")</span>
+        <input type="submit" class="btn-danger" />
+        <br />
+        <p>Don't have an account yet?</p>
+        <br />
+        <button type="button" onclick="location.href='@Url.Action("signup", "restaurant")'">Signup</button>
+    </fieldset>
+</form>
+<link href="@Url.Content("~/Style/myStyle.css")" rel="stylesheet" />

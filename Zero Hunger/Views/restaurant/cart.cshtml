@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Zero_Hunger.Models.addFoodDTO>
+
+@{
+    ViewBag.Title = "cart";
+    Layout = "~/Views/Shared/_restLayout.cshtml";
+}
+
+<aside class="sidebar">
+    <nav>
+        <ul>
+            <li><a href="@Url.Action("Index", "restaurant")">My History</a></li>
+            <li><a href="@Url.Action("cart", "restaurant")">Cart</a></li>
+            <li><a href="@Url.Action("Index", "Home")">Logout</a></li>
+        </ul>
+    </nav>
+</aside>
+
+<form>
+    @Html.ActionLink("Add more Food", "add", "restaurant", new { area = "" }, new { @class = "btn btn-success" })
+    @Html.ActionLink("Checkout", "checkout", "restaurant", new { area = "" }, new { @class = "btn btn-dark" })
+    @Html.ActionLink("Clear", "clear", "restaurant", new { area = "" }, new { @class = "btn btn-danger" })
+</form>
+<br />
+
+<div>
+    @if (TempData["msg"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["msg"]
+        </div>
+    }
+
+    @if (Model == null)
+    {
+        <h1>No food is added yet</h1>
+        <br />
+    }
+    else
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    Type
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.type
+                    </td>
+                    <td>
+                        @item.quantity
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+</div>
+
+<link href="@Url.Content("~/Style/myStyle.css")" rel="stylesheet" />
